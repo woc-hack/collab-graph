@@ -1,5 +1,11 @@
 # collab-graph
 
+Members:
+- Vladimir
+- Nikolai
+- Elena
+- Mahmoud
+
 TODO:
 
 - team name?
