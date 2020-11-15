@@ -6,7 +6,6 @@ Members:
 - Elena
 - Mahmoud
 
-TODO:
 
 - team name: Collab-Graph
 - Google meet / zoom room: https://meet.google.com/dsd-ohcj-xrf
