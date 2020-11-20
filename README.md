@@ -25,7 +25,24 @@ Using shell to find the author, piping the results to lookup a2p and then using 
 
 `echo dddff9a89ddd7098a1625cafd3c9d1aa87474cc7 | ~/lookup/showCnt commit | cut -d \; -f 4 | ~/lookup/getValues -f a2p | cut -d \; -f 2 | ~/lookup/getValues -f p2a | cut -d \; -f 2 | sort | uniq`
 
+Sample result:
+
+    aaron <aaron@ccf9f872-aa2e-dd11-9fc8-001c23d0bc1f>
+    aaron <aaron@FreeBSD.org>
+    Aaron Dalton <aaron@ccf9f872-aa2e-dd11-9fc8-001c23d0bc1f>
+    Aaron Dalton <aaron@FreeBSD.org>
+    abial <abial@ccf9f872-aa2e-dd11-9fc8-001c23d0bc1f>
+    abial <abial@FreeBSD.org>
+    Achim Leubner <achim@ccf9f872-aa2e-dd11-9fc8-001c23d0bc1f>
+    Achim Leubner <achim@FreeBSD.org>
+    adam <adam@ccf9f872-aa2e-dd11-9fc8-001c23d0bc1f>
+    adam <adam@FreeBSD.org>
+
 This was just a demonstration, how to lookup authors connected to a given author.
+
+### Issues:
+
+- Multiple names/emails associated with one author
 
 But to start our search, we have to obtain a list of authors. For this purpose, we can use mongodb to retrieve the list of projects with at least two authors. Then using a p2a, we will have a complete list of authors who have participated in a project with at least one other author.
 
@@ -63,5 +80,3 @@ Sample result:
 ### Issues:
 
 - Multiple names/emails associated with one author
-
-
