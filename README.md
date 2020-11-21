@@ -40,10 +40,6 @@ Sample result:
 
 This was just a demonstration, how to lookup authors connected to a given author.
 
-### Issues:
-
-- Multiple names/emails associated with one author
-
 But to start our search, we have to obtain a list of authors. For this purpose, we can use mongodb to retrieve the list of projects with at least two authors. Then using a p2a, we will have a complete list of authors who have participated in a project with at least one other author.
 
 # Obtaining the authors list (graph nodes)
@@ -88,19 +84,44 @@ By the way, running this code results in the following error:
         response['starting_from'], self.__retrieved))
     AssertionError: Result batch started from 232103, expected 232102
 
-But apparently this error is a BUG in Mongo (When querying a sharded replica set, Mongo returns an incorrect value for 'starting_from') and we got around it by runningpython with `-O` option which ignores assertion errors. 
+But apparently this error is a BUG in Mongo (When querying a sharded replica set, Mongo returns an incorrect value for 'starting_from') and we got around it by running python with `-O` option which ignores assertion errors. 
 
 There are total number of 21,978,139 projects with more than one author which are now saved in project_list.
 
 ## Finding authors using the projects list
 
-`cat project_list | head -1 | cut -d \' -f 4 | ~/lookup/getValues -f p2a`
+Using the project_list, list of authors were retrieved.
+
+    cat project_list |
+    cut -d \' -f 4 |
+    ~/lookup/getValues -f p2a \
+    > p2a_table \
+    2> p2a_table.error
+
+This query resulted in 62,067,751 rows which are now saved in p2a_table.
 
 Sample result:
 
     akudryashov_SegmentControl;Anton Kudryashov <qubabox@mail.ru>
     akudryashov_SegmentControl;Антон Кудряшов <qubabox@mail.ru>
-    
+    rads-io_open_data_schema_map;Aaron Couch <acinternets@gmail.com>
+    rads-io_open_data_schema_map;Dan Feder <dafeder@gmail.com>
+    rads-io_open_data_schema_map;Dan Feder <dan@nuams.com>
+
+There were also 302 projects which could not be found with p2a mappings and are saved in p2a_table.error.
+
+Using p2a_table we can obtain uniq authors involved in our selected projects.
+
+    cat p2a_table | 
+    cut -d \; -f 2 | 
+    sort | 
+    uniq -c \
+    > author_list
+
+That resulted in 25,880,258 uniq authors which is saved in author_list.
+
 ### Issues:
 
 - Multiple names/emails associated with one author
+- Invalid entries (e.g. "^_^ <^_^>")
+
