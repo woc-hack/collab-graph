@@ -52,10 +52,21 @@ But to start our search, we have to obtain a list of authors. For this purpose, 
 
 Using mongodb to retrieve list of projects with at least 2 authors.
 
-    coll = db['proj_metadata.R']
-     
-    dataset = coll.find( { "NumAuthors": { "$gt": 1 } } , {"projectID" : 1} )
+    import pymongo
+    import bson
 
+    client = pymongo.MongoClient("mongodb://da1.eecs.utk.edu/")
+    db = client ['WoC']
+    coll = db['proj_metadata.R']
+
+    dataset = coll.find( { "NumAuthors": { "$gt": 1 } } , {"projectID" : 1} , no_cursor_timeout=True )
+
+    with open('./project_list', 'w') as f:
+        for data in dataset:
+            print >> f, data
+
+    dataset.close()
+     
 Sample result:
 
     {u'projectID': u'akudryashov_SegmentControl', u'_id': ObjectId('5f8097d6316a1fef66927fe7')}
@@ -64,9 +75,22 @@ Sample result:
     {u'projectID': u'xialiu1988_Songr', u'_id': ObjectId('5f8097d6316a1fef66927fea')}
     {u'projectID': u'ashwaniks_go-demo-3', u'_id': ObjectId('5f8097d6316a1fef66927feb')}
 
-I cannot get the full list as I am getting this error right now:  
+By the way, running this code results in the following error:  
 
-`AssertionError: Result batch started from 232103, expected 232102`
+    Traceback (most recent call last):
+      File "project_list.py", line 11, in <module>
+        for data in dataset:
+      File "/usr/lib64/python2.7/site-packages/pymongo/cursor.py", line 814, in next
+        if len(self.__data) or self._refresh():
+      File "/usr/lib64/python2.7/site-packages/pymongo/cursor.py", line 776, in _refresh
+        limit, self.__id))
+      File "/usr/lib64/python2.7/site-packages/pymongo/cursor.py", line 733, in __send_message
+        response['starting_from'], self.__retrieved))
+    AssertionError: Result batch started from 232103, expected 232102
+
+But apparently this error is a BUG in Mongo (When querying a sharded replica set, Mongo returns an incorrect value for 'starting_from') and we got around it by runningpython with `-O` option which ignores assertion errors. 
+
+There are total number of 21,978,139 projects with more than one author which are now saved in project_list.
 
 ## Finding authors using the projects list
 
