@@ -9,6 +9,7 @@ cut -d \' -f 4 |
 cat p2a_table |
 cut -d \; -f 2 |
 sort |
-uniq -c \
+uniq -c |
+sed -n 's/^ *//g ; s/ /\;/p' \
 > author_list ;
 

@@ -115,10 +115,11 @@ Using p2a_table we can obtain uniq authors involved in our selected projects.
     cat p2a_table | 
     cut -d \; -f 2 | 
     sort | 
-    uniq -c \
+    uniq -c |
+    sed -n 's/^ *//g ; s/ /\;/p' \
     > author_list
 
-That resulted in 25,880,258 uniq authors which is saved in author_list.
+That resulted in 25,880,258 uniq authors which is saved in author_list. The first column is the accurrence count seperated with `;` from the author in the second column.
 
 ### Issues:
 
