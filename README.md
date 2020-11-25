@@ -126,3 +126,21 @@ That resulted in 25,880,258 uniq authors which is saved in author_list. The firs
 - Multiple names/emails associated with one author
 - Invalid entries (e.g. "^_^ <^_^>")
 
+To address auhtorID resolution problem, we have tried to use a2A mappings:
+
+    cat author_list |
+    cut -d \; -f 2 |
+    ~/lookup/getValues -f a2A \
+    > a2A_table \
+    2> a2A_table.error ;
+
+Unfortunately, that resulted in 14,517,517 errors which means we were only able to find about 11 million auhtor IDs in a2A mappings. These records aggregates into 5 million uniq Authors which is now saved in a file named Author_list.
+
+So to sum up, from 25 million uniq authorIDs, we were able to find 5 million uniq Authors plus 14 million other IDs which weren't recognized. That means we have to consider 19 million nodes for our graph, unless we can come up with an alternative ID resolution.
+
+There is also a2AQ.s basemap available, nevertheless, it has mappings of 15 million IDs to 6 million Authors. That means at the best, we will again end up with 10 million unrecognized IDs.
+
+These facts suggests that maybe we should come up with a way of ID resolution ourselves. By the way, Invalid entries are still a serious issue which should be addressed. They may be responsible for unrecognized IDs to a significant extent.
+
+As for the next step, filtering out irrelevant IDs and trying to map a2A again may prove beneficial.
+

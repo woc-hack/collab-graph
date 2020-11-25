@@ -13,3 +13,15 @@ uniq -c |
 sed -n 's/^ *//g ; s/ /\;/p' \
 > author_list ;
 
+cat author_list | 
+cut -d \; -f 2 | 
+~/lookup/getValues -f a2A \
+> a2A_table \
+2> a2A_table.error ;
+
+cat a2A_table |
+cut -d \; -f 2 |
+sort |
+uniq \
+> Author_list ;
+
