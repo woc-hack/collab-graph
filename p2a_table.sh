@@ -8,6 +8,7 @@ cut -d \' -f 4 |
 
 cat p2a_table |
 cut -d \; -f 2 |
+egrep '<[A-Za-z0-9._%+-]{1,}@[A-Za-z0-9.-]{1,}\.[A-Za-z]{2,}>$' |
 sort |
 uniq -c |
 sed -n 's/^ *//g ; s/ /\;/p' \
@@ -24,4 +25,3 @@ cut -d \; -f 2 |
 sort |
 uniq \
 > Author_list ;
-

@@ -86,7 +86,7 @@ By the way, running this code results in the following error:
 
 But apparently this error is a BUG in Mongo (When querying a sharded replica set, Mongo returns an incorrect value for 'starting_from') and we got around it by running python with `-O` option which ignores assertion errors. 
 
-There are total number of 21,978,139 projects with more than one author which are now saved in project_list.
+There are total number of **21,978,139** projects with more than one author which are now saved in *project_list*.
 
 ## Finding authors using the projects list
 
@@ -98,7 +98,7 @@ Using the project_list, list of authors were retrieved.
     > p2a_table \
     2> p2a_table.error
 
-This query resulted in 62,067,751 rows which are now saved in p2a_table.
+This query resulted in **62,067,751** rows which are now saved in *p2a_table*.
 
 Sample result:
 
@@ -108,7 +108,7 @@ Sample result:
     rads-io_open_data_schema_map;Dan Feder <dafeder@gmail.com>
     rads-io_open_data_schema_map;Dan Feder <dan@nuams.com>
 
-There were also 302 projects which could not be found with p2a mappings and are saved in p2a_table.error.
+There were also **302** projects which could not be found with p2a mappings and are saved in *p2a_table.error*.
 
 Using p2a_table we can obtain uniq authors involved in our selected projects.
 
@@ -119,7 +119,7 @@ Using p2a_table we can obtain uniq authors involved in our selected projects.
     sed -n 's/^ *//g ; s/ /\;/p' \
     > author_list
 
-That resulted in 25,880,258 uniq authors which is saved in author_list. The first column is the accurrence count seperated with `;` from the author in the second column.
+That resulted in **25,880,258** uniq authors which is saved in *author_list*. The first column is the accurrence count seperated with `;` from the author in the second column.
 
 ### Issues:
 
@@ -134,13 +134,14 @@ To address auhtorID resolution problem, we have tried to use a2A mappings:
     > a2A_table \
     2> a2A_table.error ;
 
-Unfortunately, that resulted in 14,517,517 errors which means we were only able to find about 11 million auhtor IDs in a2A mappings. These records aggregates into 5 million uniq Authors which is now saved in a file named Author_list.
+Unfortunately, that resulted in **14,517,517** errors which means we were only able to find about **11 million** auhtor IDs in a2A mappings. These records aggregates into **5 million** uniq Authors which is now saved in a file named *Author_list*.
 
-So to sum up, from 25 million uniq authorIDs, we were able to find 5 million uniq Authors plus 14 million other IDs which weren't recognized. That means we have to consider 19 million nodes for our graph, unless we can come up with an alternative ID resolution.
+So to sum up, from 25 million uniq authorIDs, we were able to find 5 million uniq Authors plus 14 million other IDs which weren't recognized. That means we have to consider **19 million** nodes for our graph, unless we can come up with an alternative ID resolution.
 
 There is also a2AQ.s basemap available, nevertheless, it has mappings of 15 million IDs to 6 million Authors. That means at the best, we will again end up with 10 million unrecognized IDs.
 
 These facts suggests that maybe we should come up with a way of ID resolution ourselves. By the way, Invalid entries are still a serious issue which should be addressed. They may be responsible for unrecognized IDs to a significant extent.
 
-As for the next step, filtering out irrelevant IDs and trying to map a2A again may prove beneficial.
+As for the next step, we tried filtering out irrelevant authorIDs by filtering out invalid email addresses (`egrep '<[A-Za-z0-9._%+-]{1,}@[A-Za-z0-9.-]{1,}\.[A-Za-z]{2,}>$'`). This reduced our author_list to **24,031,688** records. So, basically there were about 2 million records with irrelevant email addresses. a2A_table was updated accordingly. Number of unrecognized records reduced to **12,734,414** as expected.
 
+Next step: auhtor ID resolution for remaining 12.7 million authorIDs.
