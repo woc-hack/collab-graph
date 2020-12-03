@@ -1,7 +1,7 @@
 import io
 
-sample_n = 50000
-path_to_p2a_table = ""
+sample_n = 200000
+path_to_p2a_table = "/home/elena/p2a_table"
 with io.open(path_to_p2a_table, encoding="latin-1") as data_file:
     first_n_rows = [next(data_file) for x in range(sample_n)]
 sample_data = "".join(first_n_rows)
