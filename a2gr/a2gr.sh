@@ -34,14 +34,18 @@ uniq |
 cat tmp3 |
 cut -d \; -f 2 |
 sort |
-uniq >nodes ;
+uniq >tmp.nodes ;
 
 cat tmp3.error |
-sed -n 's/^no \(.*\) in.*$/\1/p' >>nodes;
+sed -n 's/^no \(.*\) in.*$/\1/p' >>tmp.nodes;
+
+cat tmp.nodes >>node;
+
+cat tmp.nodes |
+while read line; do
+	if [[ $corenode != $line ]]; then
+		echo "$corenode;$line"
+	fi
+done >>edge;
 
 rm tmp*;
-
-cat nodes |
-while read line; do
-	echo "$corenode;$line"
-done >edges;
