@@ -17,7 +17,7 @@ Project info:
 2. Build a usable and fun-to-explore tool (Static (?) web app with search and visualization) 
 3. Provide a convenient way to work with the graph (Distribute a dump of a graph DB (e.g. neo4j))
 
-# Trying to find the graph edges given a certain node
+### Trying to find the graph edges given a certain node
 
 A sample commit: dddff9a89ddd7098a1625cafd3c9d1aa87474cc7
 
@@ -42,9 +42,11 @@ This was just a demonstration, how to lookup authors connected to a given author
 
 But to start our search, we have to obtain a list of authors. For this purpose, we can use mongodb to retrieve the list of projects with at least two authors. Then using a p2a, we will have a complete list of authors who have participated in a project with at least one other author.
 
-# Obtaining the authors list (graph nodes)
+# 1. Building the whole graph
 
-## Finding projects with at least 2 authors
+## 1.1. Obtaining the authors list (graph nodes)
+
+### Finding projects with at least 2 authors
 
 Using mongodb to retrieve list of projects with at least 2 authors.
 
@@ -88,7 +90,7 @@ But apparently this error is a BUG in Mongo (When querying a sharded replica set
 
 There are total number of **21,978,139** projects with more than one author which are now saved in *project_list*.
 
-## Finding authors using the projects list
+### Finding authors using the projects list
 
 Using the project_list, list of authors were retrieved.
 
@@ -121,7 +123,7 @@ Using p2a_table we can obtain uniq authors involved in our selected projects.
 
 That resulted in **25,880,258** uniq authors which is saved in *author_list*. The first column is the accurrence count seperated with `;` from the author in the second column.
 
-### Issues:
+#### Issues:
 
 - Multiple names/emails associated with one author
 - Invalid entries (e.g. "^_^ <^_^>")
@@ -142,6 +144,16 @@ There is also a2AQ.s basemap available, nevertheless, it has mappings of 15 mill
 
 These facts suggests that maybe we should come up with a way of ID resolution ourselves. By the way, Invalid entries are still a serious issue which should be addressed. They may be responsible for unrecognized IDs to a significant extent.
 
-As for the next step, we tried filtering out irrelevant authorIDs by filtering out invalid email addresses (`egrep '<[A-Za-z0-9._%+-]{1,}@[A-Za-z0-9.-]{1,}\.[A-Za-z]{2,}>$'`). This reduced our author_list to **24,031,688** records. So, basically there were about 2 million records with irrelevant email addresses. a2A_table was updated accordingly. Number of unrecognized records reduced to **12,734,414** as expected.
+As for the next step, we tried filtering out irrelevant authorIDs by filtering out invalid email addresses.
+
+    egrep '<[A-Za-z0-9._%+-]{1,}@[A-Za-z0-9.-]{1,}\.[A-Za-z]{2,}>$'
+
+This reduced our author_list to **24,031,688** records. So, basically there were about 2 million records with irrelevant email addresses. a2A_table was updated accordingly. Number of unrecognized records reduced to **12,734,414** as expected.
 
 Next step: auhtor ID resolution for remaining 12.7 million authorIDs.
+
+# 2. Building a subset of graph given a certain node
+
+Visualizing a graph this large with 18 million nodes is quit challenging. That made us consider visualizing subsets of the graph, based on a given node. The idea is to build a graph centered on a given node (Author) with requested depth, defined as the maximum distance between the central node and any given node in the graph.
+
+Details can be found in a2gr directory.
