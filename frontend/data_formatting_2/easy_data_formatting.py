@@ -35,7 +35,8 @@ def main(in_path, out_path, min_authors_n):
         print "start filling graph"
 
         try:
-            for i, line in enumerate(f):
+            lines = f.readlines()
+            for i, line in enumerate(lines):
                 if i == 0:
                     project, author = line.split(";")
                     author = format_string(author)
@@ -60,8 +61,6 @@ def main(in_path, out_path, min_authors_n):
                                 else:
                                     a2ps[a] = [node]
 
-                            print(nodes_n)
-
                         cur_authors_n = 1
                         cur_project_authors = [author]
                         prev_project = project
@@ -79,8 +78,6 @@ def main(in_path, out_path, min_authors_n):
                         a2ps[author].append(node)
                     else:
                         a2ps[author] = [node]
-
-                print(nodes_n)
 
         except ValueError:
             pass
@@ -134,9 +131,9 @@ if __name__ == '__main__':
     in_path = sys.argv[1]
     out_path = sys.argv[2]
     min_authors = sys.argv[3]
-    # in_path = "../data/sample-data.txt"
-    # out_path = "../data/filtered_data_1_easy.gexf"
-    # min_authors = 1
+    # in_path = "/home/elena/p2a_table"
+    # out_path = "../data/filtered_data_10_easy.gexf"
+    # min_authors = 10
     start_time = time.time()
     main(in_path, out_path, int(min_authors))
     end_time = time.time()
