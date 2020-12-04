@@ -60,7 +60,7 @@ def main(in_path, out_path, min_authors_n):
                                 else:
                                     a2ps[a] = [node]
 
-                            # print(nodes_n)
+                            print(nodes_n)
 
                         cur_authors_n = 1
                         cur_project_authors = [author]
@@ -80,7 +80,7 @@ def main(in_path, out_path, min_authors_n):
                     else:
                         a2ps[author] = [node]
 
-                # print(nodes_n)
+                print(nodes_n)
 
         except ValueError:
             pass
@@ -88,10 +88,14 @@ def main(in_path, out_path, min_authors_n):
     e2size = {}
     edges_n = 0
 
+    authors_n = len(a2ps)
 
-    for author, projects in a2ps.items():
-        if len(projects) > 1:
-            print author, ": ",  " ".join([p.label for p in projects])
+    print "nodes", nodes_n
+
+
+
+    for i, (author, projects) in enumerate(a2ps.items()):
+        print "filling edges: ", i, "/", authors_n
         for i, p1 in enumerate(projects):
             for p2 in projects[i:]:
                 if p1.id != p2.id:
