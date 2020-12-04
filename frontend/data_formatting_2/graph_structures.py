@@ -1,9 +1,9 @@
 class Node:
-    def __init__(self, id, label, size, author):
+    def __init__(self, id, label, size, project):
         self.id = id
         self.label = label
         self.size = size
-        self.author = author
+        self.project = project
 
 class Edge:
     def __init__(self, id, source, target, label, size):

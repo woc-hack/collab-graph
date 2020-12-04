@@ -2,6 +2,7 @@ import io
 import itertools
 import re
 import sys
+import time
 
 sys.path.append("..")
 
@@ -90,7 +91,10 @@ if __name__ == '__main__':
     in_path = sys.argv[1]
     out_path = sys.argv[2]
     min_authors = sys.argv[3]
+    start_time = time.time()
     main(in_path, out_path, int(min_authors))
+    end_time = time.time()
+    print(end_time - start_time)
 
 # ../data/sample-data.txt
 # ../data/filtered-data.gexf
