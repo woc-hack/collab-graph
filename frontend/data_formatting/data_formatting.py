@@ -58,7 +58,7 @@ def main(in_path, out_path, min_authors):
         if i % 10000 == 0:
             print(f"filling graph: i = {i}")
         project_authors = filtered_p2a_dict[(project, i)]
-        nodes.append(Node(str(i), project, len(project_authors), project))
+        nodes.append(Node(str(i), project))
 
         adj_projects = set(itertools.chain(*[a2p2i_dict[a] for a in project_authors])) & set(filtered_p2a_dict.keys())
 

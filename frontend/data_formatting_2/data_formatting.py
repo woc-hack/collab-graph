@@ -56,10 +56,9 @@ def main(in_path, out_path, min_authors):
 
     projects = list(filtered_p2a_dict.keys())
 
-    for project, i in projects:
-        if i % 10000 == 0:
-            print "filling graph: ", i
-
+    for en, (project, i) in enumerate(projects):
+        if en % 1000 == 0:
+            print en, len(projects)
         project_authors = filtered_p2a_dict[(project, i)]
         nodes.append(Node(str(i), project, len(project_authors), project))
 
@@ -70,8 +69,8 @@ def main(in_path, out_path, min_authors):
                 if len(common_projects) > 0:
                     edges.append(Edge(str(len(edges)), str(i), str(j), " ".join(common_projects), len(common_projects)))
 
-    print len(nodes)
-    print len(edges)
+    print "nodes", len(nodes)
+    print "edges", len(edges)
 
     with io.open(out_path, encoding="latin-1", mode="w+") as f:
         print("start writing graph")
@@ -101,4 +100,4 @@ if __name__ == '__main__':
 # 102456
 #  3:
 #  5550
-# 102428
+# 102428vf

@@ -13,7 +13,6 @@ class Node:
     id: str
     label: str
     size: float
-    author: str
 
 
 @dataclass

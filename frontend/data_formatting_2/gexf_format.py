@@ -8,7 +8,7 @@ def start_nodes(f):
 
 
 def write_node(f, node):
-    n = "           <node id=\"" + str(node.id) + "\" label=\"" + str(node.label) + "\"/>\n"
+    n = "           <node id=\"" + str(node.id) + "\" label=\"" + str(node.label) + "\" size=\"" + str(node.size) + "\"/>\n"
     f.write(n.decode("utf-8"))
 
 

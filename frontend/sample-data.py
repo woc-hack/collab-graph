@@ -1,6 +1,6 @@
 import io
 
-sample_n = 10000
+sample_n = 100000
 path_to_p2a_table = "/home/elena/p2a_table"
 with io.open(path_to_p2a_table, encoding="latin-1") as data_file:
     first_n_rows = [next(data_file) for x in range(sample_n)]
