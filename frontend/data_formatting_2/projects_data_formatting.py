@@ -14,9 +14,8 @@ from frontend.data_formatting_2.graph_structures import Node, Edge
 
 
 def format_string(s):
-    return re.sub(r'\W', r'',
+    return re.sub(r'[^\x00-\x7F]+', ' ',
                   s.replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("&", "&amp;").strip("\n"))
-
 
 
 def main(in_path, out_path, min_authors_n):
