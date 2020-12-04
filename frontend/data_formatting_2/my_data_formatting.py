@@ -25,12 +25,12 @@ def main(in_path, out_path, min_authors_n):
     with io.open(in_path, encoding="latin-1") as f:
         print "start filling graph"
 
-        try:
-            projs = {}
-            a2ps = {}
-            lines = f.readlines()
-            lines_n = len(lines)
-            for i, line in enumerate(lines):
+        projs = {}
+        a2ps = {}
+        lines = f.readlines()
+        lines_n = len(lines)
+        for i, line in enumerate(lines):
+            try:
                 project, author = line.split(";")
                 project = format_string(project)
                 author = format_string(author)
@@ -45,8 +45,9 @@ def main(in_path, out_path, min_authors_n):
 
                 if i % 10000 == 0:
                     print(i, lines_n)
-        except ValueError:
-            pass
+            except ValueError:
+                print("error")
+                pass
 
     node_i = 0
     nodes = []
