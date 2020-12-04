@@ -20,8 +20,8 @@ def start_edges(f):
     f.write("       <edges>\n".decode("utf-8"))
 
 
-def write_edge(f, edge):
-    e = "           <edge id=\"" + str(edge.id) + "\" source=\"" + str(edge.source_node_id) + "\" target=\"" + str(edge.target_node_id) + "\" label=\"" + str(edge.size) + "\" weight=\"" + str(edge.size) + "\"/>\n"
+def write_edge(f, id, source, target, size):
+    e = "           <edge id=\"" + str(id) + "\" source=\"" + str(source) + "\" target=\"" + str(target) + "\" label=\"" + str(size) + "\" weight=\"" + str(size) + "\"/>\n"
     f.write(e.decode("utf-8"))
 
 

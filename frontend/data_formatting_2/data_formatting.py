@@ -61,7 +61,7 @@ def main(in_path, out_path, min_authors):
         if en % 1000 == 0:
             print en, len(projects)
         project_authors = filtered_p2a_dict[(project, i)]
-        nodes.append(Node(str(i), project, len(project_authors), project))
+        nodes.append(Node(str(en), project, len(project_authors), project))
 
         adj_projects = set(itertools.chain(*[a2p2i_dict[a] for a in project_authors])) & set(filtered_p2a_dict.keys())
         for adj_project, j in adj_projects:
@@ -73,6 +73,8 @@ def main(in_path, out_path, min_authors):
     print "nodes", len(nodes)
     print "edges", len(edges)
 
+    nodes = sorted(nodes, key=lambda n: int(n.id))
+
     with io.open(out_path, encoding="latin-1", mode="w+") as f:
         print("start writing graph")
         start(f)
@@ -82,7 +84,7 @@ def main(in_path, out_path, min_authors):
         finish_nodes(f)
         start_edges(f)
         for edge in edges:
-            write_edge(f, edge)
+            write_edge(f, edge.id, edge.source_node_id, edge.target_node_id, edge.size)
         finish_edges(f)
         finish(f)
 
