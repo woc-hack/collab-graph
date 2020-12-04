@@ -20,16 +20,7 @@ def format_string(s):
 
 
 def main(in_path, out_path, min_authors_n):
-    nodes = []
-    prev_project = ""
     a2ps = {}
-    nodes_n = 0
-
-    p2a_dict = {}
-
-    # manager = mp.Manager()
-    # ns = manager.Namespace()
-    # ns.edges = []
 
     with io.open(in_path, encoding="latin-1") as f:
         print "start filling graph"
@@ -57,62 +48,25 @@ def main(in_path, out_path, min_authors_n):
         except ValueError:
             pass
 
-    nodes = [Node(i, p, len(auth), p) for i, (p, auth) in enumerate(projs.items()) \
-             if len(auth) >= min_authors_n]
+    node_i = 0
+    nodes = []
+    for p, auth in projs.items():
+        if len(auth) >= min_authors_n:
+            node = Node(node_i, p, len(auth), p)
+            nodes.append(node)
+            node_i += 1
+
+
+
+    # nodes = [Node(i, p, len(auth), p) for i, (p, auth) in enumerate(projs.items()) \
+    #          if len(auth) >= min_authors_n]
+
     proj_inds = {node.project:node.id for node in nodes}
-    a2ps = {a: [p for p in projects if p in proj_inds] for a, projects in a2ps}
-
-
-
-                # if i == 0:
-                #     project, author = line.split(";")
-                #     author = format_string(author)
-                #     prev_project = format_string(project)
-                #
-                #     cur_authors_n = 1
-                #     cur_project_authors = [author]
-                #     continue
-                # else:
-                #     project, author = line.split(";")
-                #     author = format_string(author)
-                #     project = format_string(project)
-                #     if project != prev_project:
-                #         # finish processing prev project
-                #         if cur_authors_n >= min_authors_n:
-                #             node = Node(nodes_n, prev_project, cur_authors_n, prev_project)
-                #             nodes.append(node)
-                #             nodes_n += 1
-                #             for a in cur_project_authors:
-                #                 if a in a2ps:
-                #                     a2ps[a].append(node)
-                #                 else:
-                #                     a2ps[a] = [node]
-                #
-                #         cur_authors_n = 1
-                #         cur_project_authors = [author]
-                #         prev_project = project
-                #     else:
-                #         cur_authors_n += 1
-                #         cur_project_authors.append(author)
-
-            # finish processing prev project
-            # if cur_authors_n >= min_authors_n:
-            #     node = Node(nodes_n, prev_project, cur_authors_n, prev_project)
-            #     nodes.append(node)
-            #     nodes_n += 1
-            #     for author in cur_project_authors:
-            #         if author in a2ps:
-            #             a2ps[author].append(node)
-            #         else:
-            #             a2ps[author] = [node]
+    a2ps = {a: [p for p in projects if p in proj_inds] for a, projects in a2ps.items()}
 
     e2size = {}
-    edges_n = 0
-
     authors_n = len(a2ps)
-
     print "nodes", len(nodes)
-
 
     for i, (author, projects) in enumerate(a2ps.items()):
         print "filling edges: ", i, "/", authors_n
