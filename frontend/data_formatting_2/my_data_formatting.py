@@ -57,7 +57,6 @@ def main(in_path, out_path, min_authors_n):
             node_i += 1
 
 
-
     # nodes = [Node(i, p, len(auth), p) for i, (p, auth) in enumerate(projs.items()) \
     #          if len(auth) >= min_authors_n]
 
@@ -70,9 +69,11 @@ def main(in_path, out_path, min_authors_n):
 
     for i, (author, projects) in enumerate(a2ps.items()):
         print "filling edges: ", i, "/", authors_n
-        for i, p1 in enumerate(projects):
+        projects_n = len(projects)
+        for j, p1 in enumerate(projects):
+            print "project: ", j, "/", projects_n
             i1 = proj_inds[p1]
-            for p2 in projects[i+1:]:
+            for p2 in projects[j+1:]:
                 i2 = proj_inds[p2]
                 if i1 != i2:
                     if i1 < i2:
