@@ -2,25 +2,38 @@
 
 while read line; do
 	echo $line;
-done >tmp0;
+done >temp0;
 
-rm nodes edges 2> /dev/null;
+a=$(date +%s);
+
+rm node* edge* 2>/dev/null;
+
+declare -A dnodes
 
 for i in $(seq 0 $(($1-1))); do
-	cat tmp$i |
+	j=0;
 	while read line; do
-		echo $line |
-		sh a2gr.sh;
-	done;
-	
+		if [ ! ${dnodes["$line"]} ]; then
+                        echo $line |
+                        sh a2gr.sh;
+			j=$(($j+1));
+			dnodes["$line"]=$i;
+                fi;
+	done <<< "$(cat temp$i)" ;
+	if [ $j -eq 0 ]; then
+		break;
+	fi;
 	cat node | 
 	sort | 
-	uniq >tmp$(($i+1));
+	uniq >temp$(($i+1));
 	
 	rm node;
 done;
 
-cat tmp$1 >nodes;
+find temp* |
+xargs cat |
+sort |
+uniq >nodes;
 
 cat edge | 
 awk -F \; '
@@ -34,4 +47,8 @@ uniq >edges;
 
 rm edge;
 
-rm tmp*;
+rm temp*;
+
+b=$(date +%s);
+
+echo "Built the files in $(($b - $a)) seconds!";

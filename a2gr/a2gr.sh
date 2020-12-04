@@ -21,7 +21,7 @@ else
 fi;
 
 cat tmp2 |
-~/lookup/getValues -f a2p |
+~/lookup/getValues -f a2p 2>/dev/null |
 cut -d \; -f 2 |
 sort | 
 uniq | 
