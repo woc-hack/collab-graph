@@ -5,8 +5,10 @@ from frontend.data_formatting.graph_structures import Node, Edge
 
 def start(f):
     f.write("""<?xml version="1.0" encoding="UTF-8"?>
-<gexf xmlns="http://www.gexf.net/1.2draft" version="1.2">
-    <graph mode="static" defaultedgetype="directed">""")
+<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:viz="http://www.gexf.net/1.1draft/viz">
+    <graph mode="static" defaultedgetype="undirected">\n""")
+
+
 
 def start_nodes(f):
     f.write("       <nodes>\n")
@@ -30,7 +32,7 @@ def write_edge(f, edge: Edge):
 
 
 def finish_edges(f):
-    f.write("       </edges>")
+    f.write("       </edges>\n")
 
 
 def finish(f):
