@@ -1,9 +1,9 @@
 # collab-graph
 
-Have fun with interactive [collaboration graph of projects](https://woc-hack.github.io/collab-graph/projects/):
+Be sure to have fun with our [interactive collaboration graph of projects](https://woc-hack.github.io/collab-graph/projects/):
 ![](/readme_img/projects.png)
 
-and [collaboration graph of authors](https://woc-hack.github.io/collab-graph/authors/):
+and [interactive collaboration graph of authors](https://woc-hack.github.io/collab-graph/authors/):
 ![](/readme_img/authors.png)
 
 
