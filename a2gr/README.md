@@ -21,5 +21,5 @@ Usage: `echo 'authorID' | sh a2gr-r.sh depth`
 
 Reads the authorID from standard input, gets depth as argument and recursively uses a2gr to build a complete graph with the given depth. Depth is defined as the maximum distance between the central node and any given node in the graph. That means if for example we set the depth to 2, we will have all the nodes with distance 1 or 2 from the central node and subsequently all the edges between these nodes. Output files are as follows:
 
-1. **nodes** which contains all the Authors connected to the central Author within the given depth
+1. **nodes** which contains all the Authors connected to the central Author within the given depth in the format: `Author;distance from central Author`
 2. **edges** which contains the edges between all nodes

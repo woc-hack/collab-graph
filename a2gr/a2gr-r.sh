@@ -2,11 +2,22 @@
 
 while read line; do
 	echo $line;
-done >temp0;
+done >input;
 
 a=$(date +%s);
 
-rm node* edge* 2>/dev/null;
+cat input | 
+~/lookup/getValues -f a2A >inputa2A 2>inputa2A.error;
+
+cat inputa2A |
+cut -d \; -f 2 |
+sort |
+uniq >temp0 ;
+
+cat inputa2A.error |
+sed -n 's/^no \(.*\) in.*$/\1/p' >>temp0;
+
+rm input inputa2A inputa2A.error node edge 2>/dev/null;
 
 declare -A dnodes
 
