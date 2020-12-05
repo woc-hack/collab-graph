@@ -30,10 +30,16 @@ for i in $(seq 0 $(($1-1))); do
 	rm node;
 done;
 
-find temp* |
-xargs cat |
-sort |
-uniq >nodes;
+while read line; do
+	if [ ! ${dnodes["$line"]} ]; then
+		dnodes["$line"]=$1;
+	fi;
+done <<< "$(find temp* | xargs cat | sort | uniq)" ;
+
+for i in "${!dnodes[@]}" ; do
+        echo "${i};${dnodes[$i]}";
+done |
+sort -t \; -k 2n >nodes;
 
 cat edge | 
 awk -F \; '
