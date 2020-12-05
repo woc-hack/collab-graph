@@ -1,3 +1,7 @@
+# Building subsets of the graph
+
+**WoC**: authorID -> a2A -> A2a -> a2p -> p2a -> a2A -> graph
+
 ## a2gr.sh
 
 **authorID to graph**
