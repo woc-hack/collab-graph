@@ -5,17 +5,17 @@
   "logo": {
     "file": "",
     "link": "",
-    "text": "Me"
+    "text": ""
   },
   "text": {
     "more": "-",
-    "intro": "Collaboration graph with 8908 nodes and 179654 edges of projects with more than 50 authors",
-    "title": "Title"
+    "intro": "Collaboration graph with 8908 nodes and 179654 edges of projects with more than 50 authors. Two projects are connected if they have at least 20 common authors.",
+    "title": "Project Collaboration Graph"
   },
   "legend": {
-    "edgeLabel": "Common Projects",
-    "colorLabel": "-",
-    "nodeLabel": "Author"
+    "edgeLabel": "Common Authors",
+    "colorLabel": "Color and size represent the number of authors in project (the lighter color -> the bigger project)",
+    "nodeLabel": "Project"
   },
   "features": {
     "search": true,
