@@ -1,6 +1,6 @@
 # Retrieving the data from WoC
 
-The data available through WoC infrastructure, gives a uniq oportunity to have access to the whole OSS data at the same time which is vital to our goal. Here is how we have tried to use WoC.
+The data available through WoC infrastructure, gives a unique opportunity to have access to the whole OSS data at the same time which is vital to our goal. Here is how we have tried to use WoC.
 
 ### Trying to find the graph edges given a certain node
 
@@ -77,7 +77,7 @@ There are total number of **21,978,139** projects with more than one author whic
 
 ### Finding authors using the projects list
 
-Using the project_list, list of authors were retrieved.
+Using the project_list, list of authors was retrieved.
 
     cat project_list |
     cut -d \' -f 4 |
@@ -85,7 +85,7 @@ Using the project_list, list of authors were retrieved.
     > p2a_table \
     2> p2a_table.error
 
-This query resulted in **62,067,751** rows which are now saved in *p2a_table*.
+This query resulted in **62,067,751** rows.
 
 Sample result:
 
@@ -97,7 +97,7 @@ Sample result:
 
 There were also **302** projects which could not be found with p2a mappings and are saved in *p2a_table.error*.
 
-Using p2a_table we can obtain uniq authors involved in our selected projects.
+Using p2a_table we can obtain unique authors involved in our selected projects.
 
     cat p2a_table |
     cut -d \; -f 2 |
@@ -106,14 +106,14 @@ Using p2a_table we can obtain uniq authors involved in our selected projects.
     sed -n 's/^ *//g ; s/ /\;/p' \
     > author_list
 
-That resulted in **25,880,258** uniq authors which is saved in *author_list*. The first column is the accurrence count seperated with `;` from the author in the second column.
+That resulted in **25,880,258** unique authors.
 
 #### Issues:
 
 - Multiple names/emails associated with one author
 - Invalid entries (e.g. "^_^ <^_^>")
 
-To address auhtorID resolution problem, we have tried to use a2A mappings:
+To address auhtor ID resolution problem, we have tried to use a2A mappings:
 
     cat author_list |
     cut -d \; -f 2 |
@@ -121,25 +121,21 @@ To address auhtorID resolution problem, we have tried to use a2A mappings:
     > a2A_table \
     2> a2A_table.error ;
 
-Unfortunately, that resulted in **14,517,517** errors which means we were only able to find about **11 million** auhtor IDs in a2A mappings. These records aggregates into **5 million** uniq Authors which is now saved in a file named *Author_list*.
+That resulted in **14,517,517** errors which means we were only able to find about **11 million** author IDs in a2A mappings. These records aggregate into **5 million** unique Authors.
 
-So to sum up, from 25 million uniq authorIDs, we were able to find 5 million uniq Authors plus 14 million other IDs which weren't recognized. That means we have to consider **19 million** nodes for our graph, unless we can come up with an alternative ID resolution.
+So to sum up, from 25 million unique author IDs, we were able to find 5 million unique Authors plus 14 million other IDs which weren't recognized. That means we have to **19 million** unique Authors.
 
-There is also a2AQ.s basemap available, nevertheless, it has mappings of 15 million IDs to 6 million Authors. That means at the best, we will again end up with 10 million unrecognized IDs.
-
-These facts suggests that maybe we should come up with a way of ID resolution ourselves. By the way, Invalid entries are still a serious issue which should be addressed. They may be responsible for unrecognized IDs to a significant extent.
-
-As for the next step, we tried filtering out irrelevant authorIDs by filtering out invalid email addresses.
+As for the next step, we tried filtering out irrelevant author IDs by filtering out invalid email addresses using regular expressions.
 
     egrep '<[A-Za-z0-9._%+-]{1,}@[A-Za-z0-9.-]{1,}\.[A-Za-z]{2,}>$'
 
-This reduced our author_list to **24,031,688** records. So, basically there were about 2 million records with irrelevant email addresses. a2A_table was updated accordingly. Number of unrecognized records reduced to **12,734,414** as expected.
+This reduced our author ID records about 2 million. *a2A_table* was updated accordingly.
 
-Next step: auhtor ID resolution for remaining 12.7 million authorIDs.
+Finally, using all the data we build our *p2A_table* which contains **57,847,960** rows of unique project name and Author combinations, containing **21,838,782** unique projects and **17,640,565** unique Authors.
 
 # 2. Building a subset of graph given a certain node
 
 Visualizing a graph this large with 18 million nodes is quit challenging. That made us consider visualizing subsets of the graph, based on a given node. The idea is to build a graph centered on a given node (Author) with requested depth, defined as the maximum distance between the central node and any given node in the graph.
 
 Details can be found in a2gr directory.
--- INSERT --
+

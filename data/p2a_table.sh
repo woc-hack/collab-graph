@@ -1,27 +1,26 @@
 #!/bin/sh
 
-cat project_list | 
-cut -d \' -f 4 |
-~/lookup/getValues -f p2a \
+cut -d \' -f 4 <project_list |
+~/lookup/getValues -f p2a |
+egrep '<[A-Za-z0-9._%+-]{1,}@[A-Za-z0-9.-]{1,}\.[A-Za-z]{2,}>$' \
 > p2a_table \
 2> p2a_table.error ;
 
-cat p2a_table |
-cut -d \; -f 2 |
-egrep '<[A-Za-z0-9._%+-]{1,}@[A-Za-z0-9.-]{1,}\.[A-Za-z]{2,}>$' |
+cut -d \; -f 2 <p2a_table |
 sort |
-uniq -c |
-sed -n 's/^ *//g ; s/ /\;/p' \
-> author_list ;
-
-cat author_list | 
-cut -d \; -f 2 | 
-~/lookup/getValues -f a2A \
+uniq | 
+~/lookup/getValues -f a2A |
+sort |
+uniq \
 > a2A_table \
 2> a2A_table.error ;
 
-cat a2A_table |
-cut -d \; -f 2 |
-sort |
-uniq \
-> Author_list ;
+sed -n 's/^no \(.*\) in \/da0_data\/basemaps\/a2AFull.$/\1;\1/p' <a2A_table.error \
+>> a2A_table ;
+
+rm a2A_table.error ;
+
+join -1 2 -2 1 -t \; -o 1.1,2.2 <(sort -t \; -k 2 p2a_table) <(sort -t \; -k 1 a2A_table) \
+> p2A_table \
+2> p2A_table.error
+
