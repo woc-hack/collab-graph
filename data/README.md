@@ -131,7 +131,7 @@ As for the next step, we tried filtering out irrelevant author IDs by filtering 
 
 This reduced our author ID records about 2 million. *a2A_table* was updated accordingly.
 
-Finally, using all the data we build our *p2A_table* which contains **57,847,960** rows of unique project name and Author combinations, containing **21,838,782** unique projects and **17,640,565** unique Authors.
+Finally, using all the data we build our *p2A_table* which contains **47,400,507** rows of unique project name and Author combinations, containing **21,838,782** unique projects and **17,640,565** unique Authors.
 
 # 2. Building a subset of graph given a certain node
 

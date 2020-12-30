@@ -20,7 +20,9 @@ sed -n 's/^no \(.*\) in \/da0_data\/basemaps\/a2AFull.$/\1;\1/p' <a2A_table.erro
 
 rm a2A_table.error ;
 
-join -1 2 -2 1 -t \; -o 1.1,2.2 <(sort -t \; -k 2 p2a_table) <(sort -t \; -k 1 a2A_table) \
+join -1 2 -2 1 -t \; -o 1.1,2.2 <(sort -t \; -k 2 p2a_table) <(sort -t \; -k 1 a2A_table) |
+sort |
+uniq \
 > p2A_table \
 2> p2A_table.error
 
