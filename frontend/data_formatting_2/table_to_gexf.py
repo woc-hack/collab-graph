@@ -42,11 +42,19 @@ def parse_table(table_path):
                 if i % 10000 == 0:
                     print(i, lines_n)
             except ValueError:
-                print("error")
+                print "error: ", project, " ",  author
                 pass
     return p2as, a2ps
 
 
+def write_dict(item2items, out_file):
+    with io.open(out_file, encoding="latin-1", mode="w+") as f:
+        items_n = len(item2items)
+        for i, (item, items) in enumerate(item2items.items()):
+            s = item + ":" + ",".join(items) + "\n"
+            if i % 10000 == 0:
+                print i, "/", items_n
+            f.write(s)
 
 
 # Create graph from two dictionaries:
@@ -127,12 +135,15 @@ if __name__ == '__main__':
     table_path = sys.argv[1]
     out_authors_path = sys.argv[2]
     out_projects_path = sys.argv[3]
-    min_authors_number = int(sys.argv[4])
-    min_projects_number = int(sys.argv[5])
+    # min_authors_number = int(sys.argv[4])
+    # min_projects_number = int(sys.argv[5])
 
     start_time = time.time()
-    
-    main(table_path, out_authors_path, out_projects_path, min_authors_number, min_projects_number)
+
+    p2as, a2ps = parse_table(table_path)
+    write_dict(p2as, out_projects_path)
+    write_dict(a2ps, out_authors_path)
+    # main(table_path, out_authors_path, out_projects_path, min_authors_number, min_projects_number)
 
     end_time = time.time()
     print(end_time - start_time)
