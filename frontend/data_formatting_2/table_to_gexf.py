@@ -61,7 +61,9 @@ def create_and_write_graph(log, n2edges, e2nodes, min_n, out_file):
     # Create graph nodes from nodes that meet the requirement of the min authors number
     graph_node_i = 0
     graph_nodes = []
-    for node, edges in n2edges.items():
+    nodes_len = len(n2edges.items())
+    for i, (node, edges) in enumerate(n2edges.items()):
+        print log, "filling nodes: ", i, "/", nodes_len
         if len(edges) >= min_n:
             node = Node(graph_node_i, node, len(edges), "")
             graph_nodes.append(node)
