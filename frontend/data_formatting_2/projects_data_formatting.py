@@ -60,7 +60,7 @@ def main(in_path, out_path, min_authors_n):
     # nodes = [Node(i, p, len(auth), p) for i, (p, auth) in enumerate(projs.items()) \
     #          if len(auth) >= min_authors_n]
 
-    proj_inds = {node.project:node.id for node in nodes}
+    proj_inds = {node.project : node.id for node in nodes}
     a2ps = {a: [p for p in projects if p in proj_inds] for a, projects in a2ps.items()}
 
     e2size = {}

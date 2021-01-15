@@ -1,16 +1,13 @@
 import io
-import itertools
 import re
 import sys
-import multiprocessing as mp
 import time
-from functools import partial
 
 sys.path.append("..")
 
 from frontend.data_formatting_2.gexf_format import start_nodes, write_node, finish_nodes, start_edges, write_edge, \
     finish_edges, start, finish
-from frontend.data_formatting_2.graph_structures import Node, Edge
+from frontend.data_formatting_2.graph_structures import Node
 
 
 def format_string(s):
@@ -19,12 +16,12 @@ def format_string(s):
 
 
 def main(in_path, out_path, min_authors_n):
-    a2ps = {}
-
     with io.open(in_path, encoding="latin-1") as f:
         print "start filling graph"
 
-        projs = {}
+        # For each project stores a list of authors
+        p2as = {}
+        # For each author stores a list of projects
         a2ps = {}
         lines = f.readlines()
         lines_n = len(lines)
@@ -33,10 +30,10 @@ def main(in_path, out_path, min_authors_n):
                 author, project = line.split(";")
                 project = format_string(project)
                 author = format_string(author)
-                if project in projs:
-                    projs[project].append(author)
+                if project in p2as:
+                    p2as[project].append(author)
                 else:
-                    projs[project] = [author]
+                    p2as[project] = [author]
                 if author in a2ps:
                     a2ps[author].append(project)
                 else:
@@ -48,21 +45,20 @@ def main(in_path, out_path, min_authors_n):
                 print("error")
                 pass
 
+    # Create nodes from projects that meet the requirement of the min authors number
     node_i = 0
     nodes = []
-    for p, auth in projs.items():
-        if len(auth) >= min_authors_n:
-            node = Node(node_i, p, len(auth), p)
+    for p, authors in p2as.items():
+        if len(authors) >= min_authors_n:
+            node = Node(node_i, p, len(authors), p)
             nodes.append(node)
             node_i += 1
 
+    # Filter a2ps, removing the projects with insufficient amount of authors
+    p2id = {node.project : node.id for node in nodes}
+    a2ps = {a: [p for p in projects if p in p2id] for a, projects in a2ps.items()}
 
-    # nodes = [Node(i, p, len(auth), p) for i, (p, auth) in enumerate(projs.items()) \
-    #          if len(auth) >= min_authors_n]
-
-    proj_inds = {node.project:node.id for node in nodes}
-    a2ps = {a: [p for p in projects if p in proj_inds] for a, projects in a2ps.items()}
-
+    # Create edges where its size is the number of common authors between two projects
     e2size = {}
     authors_n = len(a2ps)
     print "nodes", len(nodes)
@@ -72,26 +68,25 @@ def main(in_path, out_path, min_authors_n):
         projects_n = len(projects)
         for j, p1 in enumerate(projects):
             print "project: ", j, "/", projects_n
-            i1 = proj_inds[p1]
+            id1 = p2id[p1]
             for p2 in projects[j+1:]:
-                i2 = proj_inds[p2]
-                if i1 != i2:
-                    if i1 < i2:
-                        e = (nodes[i1], nodes[i2])
+                id2 = p2id[p2]
+                if id1 != id2:
+                    if id1 < id2:
+                        edge = (nodes[id1], nodes[id2])
                     else:
-                        e = (nodes[i2], nodes[i1])
+                        edge = (nodes[id2], nodes[id1])
 
-                    if e not in e2size:
-                        e2size[e] = 1
+                    if edge not in e2size:
+                        e2size[edge] = 1
                     else:
-                        e2size[e] += 1
-
+                        e2size[edge] += 1
 
 
     print "nodes", len(nodes)
     print "edges", len(e2size)
 
-
+    # Write graph in .gexf format
     with io.open(out_path, encoding="latin-1", mode="w+") as f:
         print("start writing graph")
         start(f)
@@ -118,12 +113,4 @@ if __name__ == '__main__':
     end_time = time.time()
     print(end_time - start_time)
 
-# ../data/sample-data.txt
-# ../data/filtered-data.gexf
 
-#  2:
-# 5550
-# 102456
-#  3:
-#  5550
-# 102428vf

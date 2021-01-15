@@ -1,7 +1,7 @@
 import io
 import re
 
-from frontend.colors import get_color
+from frontend.colors import get_color, ProjectsColored
 from frontend.data_formatting.graph_structures import Node
 
 with io.open("../data/filtered_edges_60_authors_50.gexf") as in_f:
@@ -17,7 +17,8 @@ with io.open("../data/filtered_edges_60_authors_50.gexf") as in_f:
                     node = Node(node_search.group(1), node_search.group(2), float(node_search.group(3)))
                     out_f.write(f"           <node id=\"{node.id}\" label=\"{node.label}\">\n")
                     out_f.write(f"              <viz:size value=\"{node.size}\"/>\n")
-                    out_f.write(get_color(node.size))
+                    # TODO: color projects
+                    out_f.write(ProjectsColored.get_color(node.size))
                     out_f.write(f"           </node>\n")
                     continue
                 else:
