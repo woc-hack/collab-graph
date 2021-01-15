@@ -24,5 +24,16 @@ join -1 2 -2 1 -t \; -o 1.1,2.2 <(sort -t \; -k 2 p2a_table) <(sort -t \; -k 1 a
 sort |
 uniq \
 > p2A_table \
-2> p2A_table.error
+2> p2A_table.error ;
 
+cut -d \; -f 1 <p2A_table | 
+sort | 
+uniq -c | 
+sort -nr \
+> p_list ;
+
+cut -d \; -f 2 <p2A_table | 
+sort | 
+uniq -c | 
+sort -nr \
+> A_list ;
