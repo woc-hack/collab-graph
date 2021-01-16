@@ -19,6 +19,7 @@ def format_string(s):
 def parse_table(table_path):
     print "start parsing table"
     # For each project stores a list of authors
+    error_n = 0
     p2as = {}
     # For each author stores a list of projects
     a2ps = {}
@@ -43,7 +44,9 @@ def parse_table(table_path):
                     print(i, lines_n)
             except ValueError:
                 print "error: ", project, " ",  author
-                pass
+                error_n += 1
+		pass
+    print "errors: ", error_n
     return p2as, a2ps
 
 
@@ -135,15 +138,15 @@ if __name__ == '__main__':
     table_path = sys.argv[1]
     out_authors_path = sys.argv[2]
     out_projects_path = sys.argv[3]
-    # min_authors_number = int(sys.argv[4])
-    # min_projects_number = int(sys.argv[5])
+    min_authors_number = int(sys.argv[4])
+    min_projects_number = int(sys.argv[5])
 
     start_time = time.time()
 
-    p2as, a2ps = parse_table(table_path)
-    write_dict(p2as, out_projects_path)
-    write_dict(a2ps, out_authors_path)
-    # main(table_path, out_authors_path, out_projects_path, min_authors_number, min_projects_number)
+    #p2as, a2ps = parse_table(table_path)
+    #write_dict(p2as, out_projects_path)
+    #write_dict(a2ps, out_authors_path)
+    main(table_path, out_authors_path, out_projects_path, min_authors_number, min_projects_number)
 
     end_time = time.time()
     print(end_time - start_time)
