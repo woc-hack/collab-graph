@@ -14,14 +14,16 @@ def main(in_path, out_path, min_node_size, min_edge_size):
     prev_nodes_n = 0
     prev_edges_n = 0
 
+    # store id of filtered nodes
     id2n = {}
 
-    nodes = []
+    nodes = set()
     edges = []
 
     n2edge_count = {}
 
     with io.open(in_path) as f:
+        print "start reading graph"
         lines = f.readlines()
         lines_n = len(lines)
         for i, line in enumerate(lines):
@@ -33,7 +35,6 @@ def main(in_path, out_path, min_node_size, min_edge_size):
                 node = Node(node_search.group(1), node_search.group(2), float(node_search.group(3)), node_search.group(2))
                 # filter out all nodes that don't meet the size requirements
                 if node.size >= min_node_size:
-                    nodes.append(node)
                     id2n[node.id] = node
 
             edge_search = re.search(
@@ -45,63 +46,29 @@ def main(in_path, out_path, min_node_size, min_edge_size):
                 edge = Edge(edge_search.group(1), edge_search.group(2), edge_search.group(3), edge_search.group(4),
                             float(edge_search.group(5)))
 
-                s_node = id2n.get(edge.source_node_id)
-                t_node = id2n.get(edge.target_node_id)
-                if s_node is not None and t_node is not None:
-                    edges.append(edge)
+                if edge.size >= min_edge_size:
+                    s_node = id2n.get(edge.source_node_id)
+                    t_node = id2n.get(edge.target_node_id)
 
-                    if s_node not in n2edge_count:
-                        n2edge_count[s_node] = 1
-                    else:
-                        n2edge_count[s_node] += 1
+                    if s_node is not None and t_node is not None:
+                        edges.append(edge)
+                        nodes.add(s_node)
+                        nodes.add(t_node)
 
-                    if t_node not in n2edge_count:
-                        n2edge_count[t_node] = 1
-                    else:
-                        n2edge_count[t_node] += 1
 
-    filtered_edges = []
+    nodes_n = len(nodes)
     edges_n = len(edges)
-    print(len(n2edge_count))
-
-    # filter out all edges that don't meet the size requirements
-    for i, edge in enumerate(edges):
-        print "filtering edges: ", i, "/", edges_n
-        if edge.size >= min_edge_size:
-            filtered_edges.append(edge)
-        else:
-            s_node = id2n.get(edge.source_node_id)
-            t_node = id2n.get(edge.target_node_id)
-
-            n2edge_count[s_node] -= 1
-            n2edge_count[t_node] -= 1
-
-            if n2edge_count[s_node] == 0:
-                del n2edge_count[s_node]
-                
-
-            if n2edge_count[t_node] == 0:
-                del n2edge_count[t_node]
-
-
-
-
-    nodes_n = len(n2edge_count)
-    edges_n = len(filtered_edges)
-
-    print nodes_n, edges_n
-
 
     with io.open(out_path, "w+") as f:
         print("start writing graph")
         start(f)
         start_nodes(f)
-        for i, (node, edge_count) in enumerate(n2edge_count.items()):
+        for i, node in enumerate(nodes):
             print "writing nodes: ", i, "/",  nodes_n
             write_node(f, node)
         finish_nodes(f)
         start_edges(f)
-        for i, edge in enumerate(filtered_edges):
+        for i, edge in enumerate(edges):
             print"writing edges: ", i, "/", edges_n
             write_edge(f, edge.id, edge.source_node_id, edge.target_node_id, edge.size)
         finish_edges(f)
