@@ -66,7 +66,7 @@ def main(in_path, out_path, min_node_size, min_edge_size):
 
     # filter out all edges that don't meet the size requirements
     for i, edge in enumerate(edges):
-        # print "filtering edges: ", i, "/", edges_n
+        print "filtering edges: ", i, "/", edges_n
         if edge.size >= min_edge_size:
             filtered_edges.append(edge)
         else:
@@ -78,11 +78,11 @@ def main(in_path, out_path, min_node_size, min_edge_size):
 
             if n2edge_count[s_node] == 0:
                 del n2edge_count[s_node]
-                print "del ", s_node.id
+                
 
             if n2edge_count[t_node] == 0:
                 del n2edge_count[t_node]
-                print "del ", t_node.id
+
 
 
 
@@ -97,12 +97,12 @@ def main(in_path, out_path, min_node_size, min_edge_size):
         start(f)
         start_nodes(f)
         for i, (node, edge_count) in enumerate(n2edge_count.items()):
-            # print "writing nodes: ", i, "/",  nodes_n
+            print "writing nodes: ", i, "/",  nodes_n
             write_node(f, node)
         finish_nodes(f)
         start_edges(f)
         for i, edge in enumerate(filtered_edges):
-            # print"writing edges: ", i, "/", edges_n
+            print"writing edges: ", i, "/", edges_n
             write_edge(f, edge.id, edge.source_node_id, edge.target_node_id, edge.size)
         finish_edges(f)
         finish(f)
