@@ -9,7 +9,7 @@
   },
   "text": {
     "more": "",
-    "intro": "Collaboration graph with 6514 nodes and 207877 edges of authors with more than 50 projects. Two authors are connected if they have at least 50 common authors.",
+    "intro": "Collaboration graph with 6514 nodes and 207877 edges of authors with more than 50 projects. Two authors are connected if they have at least 50 common projects.",
     "title": "Collaboration graph of Authors"
   },
   "legend": {
