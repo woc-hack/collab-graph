@@ -1,10 +1,10 @@
 # collab-graph
 
 Be sure to have fun with our [interactive collaboration graph of projects](https://woc-hack.github.io/collab-graph/projects/):
-![](/readme_img/projects.png)
+![](/readme_img/old-projects.png)
 
 and [interactive collaboration graph of authors](https://woc-hack.github.io/collab-graph/authors/):
-![](/readme_img/authors.png)
+![](/readme_img/old-authors.png)
 
 ## Project info
 
