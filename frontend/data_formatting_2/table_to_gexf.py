@@ -18,7 +18,7 @@ def format_string(s):
 
 def parse_table(table_path):
     print "start parsing table"
-    # For each project stores a list of authors
+    # For each project stores a list of old_authors
     error_n = 0
     p2as = {}
     # For each author stores a list of projects
@@ -63,13 +63,13 @@ def write_dict(item2items, out_file):
 # Create graph from two dictionaries:
 # 1. node to list of related edges
 # 2. edge to list of related nodes
-# For example, author (as node) to list of their projects and project (as edge) to list of its authors
+# For example, author (as node) to list of their projects and project (as edge) to list of its old_authors
 # min_number restricts the size of the list, related to node
-# For example, with min_number = 5 we take into account only authors with len(projects) >= 5
+# For example, with min_number = 5 we take into account only old_authors with len(projects) >= 5
 def create_and_write_graph(log, n2edges, e2nodes, min_n, out_file):
     print len(n2edges), len(e2nodes), min_n
     print log, "start creating nodes"
-    # Create graph nodes from nodes that meet the requirement of the min authors number
+    # Create graph nodes from nodes that meet the requirement of the min old_authors number
     graph_node_i = 0
     graph_nodes = []
     nodes_len = len(n2edges.items())
@@ -130,7 +130,7 @@ def create_and_write_graph(log, n2edges, e2nodes, min_n, out_file):
 
 def main(table_path, out_authors_path, out_projects_path, min_authors_n, min_projects_n):
     p2as, a2ps = parse_table(table_path)
-    create_and_write_graph("authors as nodes ", a2ps, p2as, min_authors_n, out_authors_path)
+    create_and_write_graph("old_authors as nodes ", a2ps, p2as, min_authors_n, out_authors_path)
     create_and_write_graph("projects as nodes ", p2as, a2ps, min_projects_n, out_projects_path)
 
 
