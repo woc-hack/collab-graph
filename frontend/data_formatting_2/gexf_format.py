@@ -1,7 +1,8 @@
 
 def start(f):
-    f.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<gexf xmlns=\"http://www.gexf.net/1.2draft\" version=\"1.2\">\n"
-            "    <graph mode=\"static\" defaultedgetype=\"directed\">".decode("utf-8"))
+    f.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+            "<gexf xmlns=\"http://www.gexf.net/1.2draft\" xmlns:viz=\"http://www.gexf.net/1.1draft/viz\">\n"
+            "    <graph mode=\"static\" defaultedgetype=\"undirected\">\n".decode("utf-8"))
 
 def start_nodes(f):
     f.write("       <nodes>\n".decode("utf-8"))
