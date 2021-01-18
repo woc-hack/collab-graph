@@ -22,7 +22,7 @@ function GetQueryStringParams(sParam,defaultVal) {
 jQuery.getJSON(GetQueryStringParams("config","config.json"), function(data, textStatus, jqXHR) {
 	config=data;
 	
-	if (config.type!="projects") {
+	if (config.type!="authors") {
 		//bad config
 		alert("Invalid configuration settings.")
 		return;
