@@ -10,7 +10,6 @@ from frontend.data_formatting_2.gexf_format import start_nodes, write_node, fini
     finish_edges, start, finish
 from frontend.data_formatting_2.graph_structures import Node
 
-
 def format_string(s):
     return re.sub(r'[^\x00-\x7F]+', ' ',
                   s.replace("<", "&lt;").replace(">", "&gt;").replace("\"", "&quot;").replace("&", "&amp;").strip("\n"))
@@ -140,14 +139,13 @@ if __name__ == '__main__':
     out_projects_path = sys.argv[3]
     min_authors_number = int(sys.argv[4])
     min_projects_number = int(sys.argv[5])
-
     start_time = time.time()
 
-    #p2as, a2ps = parse_table(table_path)
-    #write_dict(p2as, out_projects_path)
-    #write_dict(a2ps, out_authors_path)
-    main(table_path, out_authors_path, out_projects_path, min_authors_number, min_projects_number)
+    # p2as, a2ps = parse_table(table_path)
+    # write_dict(p2as, out_projects_path)
+    # write_dict(a2ps, out_authors_path)
 
+    main(table_path, out_authors_path, out_projects_path, min_authors_number, min_projects_number)
     end_time = time.time()
     print(end_time - start_time)
 
