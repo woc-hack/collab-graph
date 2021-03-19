@@ -13,6 +13,7 @@ This module contains all the scripts for data preprocessing required for the fro
     Since gephi doesn't support the custom gradient palette, we need to put the colors as attributes together with the node sizes.
    So we use [colors](colors.py) to get gradient colors for each node and then add them to the `.gexf` file running [gexf_viz_attributes.py](gexf_viz_attributes.py)
    
+
 4. [data](data)
  
     Contains data, filtered using [gexf_to_gexf.py](data_formatting_2/gexf_to_gexf.py) and colored using [gexf_viz_attributes.py](gexf_viz_attributes.py):
@@ -22,4 +23,9 @@ This module contains all the scripts for data preprocessing required for the fro
 3. [gephi](gephi)
    
    Contains already built graphs in `.gephi` format, so we can modify them later before converting into `.html` pages
+
+
+4. [html_formatting](html-formatting.py)
+
+   Replace all html tags with real symbols in graphs already built by SigmaJS (with data stored in `.json` format)
    

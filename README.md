@@ -10,10 +10,10 @@ and [interactive collaboration graph of authors](https://woc-hack.github.io/coll
 
 Name:
 - Collaboration Graph
+MSR 2021 Presentation: https://drive.google.com/file/d/15QDncxwGcsqLBiGPIIWuRPYYt1BsH0jF/view?usp=sharing
+
 
 Members:
-- Vladimir
-- Nikolai
 - Elena
 - Mahmoud 
 
@@ -21,5 +21,3 @@ Members:
 1. Build a graph of collaboration between individuals across all OSS (Aggregate contributions per repository / file)
 2. Build a usable and fun-to-explore tool (Static (?) web app with search and visualization) 
 3. Provide a convenient way to work with the graph (Distribute a dump of a graph DB (e.g. neo4j)
-
-MSR 2021 Presentation: https://drive.google.com/file/d/15QDncxwGcsqLBiGPIIWuRPYYt1BsH0jF/view?usp=sharing
