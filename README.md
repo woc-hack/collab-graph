@@ -10,8 +10,16 @@ and [interactive collaboration graph of authors](https://woc-hack.github.io/coll
 
 Name:
 - Collaboration Graph
+
+Members:
+- Elena
+- Mahmoud 
+
+
 MSR 2021 Presentation: https://drive.google.com/file/d/15QDncxwGcsqLBiGPIIWuRPYYt1BsH0jF/view?usp=sharing  
+
 Paper: https://ieeexplore.ieee.org/document/9463070  
+
 Citing this work:  
 @INPROCEEDINGS{9463070,  
   author={Lyulina, Elena and Jahanshahi, Mahmoud},  
@@ -23,9 +31,7 @@ Citing this work:
   pages={618-620},  
   doi={10.1109/MSR52588.2021.00086}}
 
-Members:
-- Elena
-- Mahmoud 
+
 
 ### Initial research ideas:
 1. Build a graph of collaboration between individuals across all OSS (Aggregate contributions per repository / file)
